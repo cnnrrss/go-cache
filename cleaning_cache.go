@@ -1,8 +1,6 @@
 package cache
 
 import (
-	"expvar"
-	"fmt"
 	"time"
 )
 
@@ -10,14 +8,11 @@ import (
 // automatically cleans it's internal storage once they are expired.
 func NewWithSelfCleanup(expiration time.Duration) *Cache {
 	c := New(expiration)
-	before := expvar.NewInt(fmt.Sprintf("size_before_%p", c))
-	after := expvar.NewInt(fmt.Sprintf("size_after_%p", c))
-	duration := expvar.NewInt(fmt.Sprintf("clean_duration_nanos_%p", c))
+
 	go func() {
 		for {
 			select {
 			case <-time.After(expiration * 2):
-				start := time.Now()
 
 				c.RLock()
 				copied := make(map[string]cached, len(c.store))
@@ -36,12 +31,9 @@ func NewWithSelfCleanup(expiration time.Duration) *Cache {
 						length++
 					}
 				}
-
-				before.Set(int64(len(copied)))
-				after.Set(length)
-				duration.Set(time.Now().Sub(start).Nanoseconds())
 			}
 		}
 	}()
+
 	return c
 }
