@@ -1,1 +1,11 @@
-.idea/*
+/bin
+/vendor
+*.mem
+*.cpu
+*.test
+*.log
+*.out
+*.html
+*.coverprofile
+coverage.txt
+*.pprof
