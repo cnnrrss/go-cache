@@ -1,3 +1,5 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/cnnrrss/go-cache)](https://goreportcard.com/report/github.com/cnnrrss/go-cache)
+
 # go-cache
 
 Package go-cache is an in-memory key-value store where keys expire after a period
@@ -7,7 +9,6 @@ The Cache type provides Get and Set methods. The cache is goroutine safe.
 
 Values are stored as type interface{}. You will need to use a type assertion
 after retrieval to use the typed value.
-
 
 ### Example
 
