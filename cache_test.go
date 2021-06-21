@@ -3,6 +3,8 @@ package cache
 import (
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var fixture = New(5 * time.Minute)
@@ -43,4 +45,25 @@ func TestGet_expired(t *testing.T) {
 	if found {
 		t.Error("expected to not find expired value")
 	}
+}
+
+func TestNewWithSelfCleanup(t *testing.T) {
+	c := NewWithSelfCleanup(100 * time.Millisecond)
+	c.Set("k", "v")
+
+	_, found := c.Get("k")
+	assert.True(t, found)
+
+	c.RLock()
+	assert.Equal(t, 1, len(c.store))
+	c.RUnlock()
+
+	time.Sleep(300 * time.Millisecond) // the time needs to be more than double the expiration to ensure the cleaner ran
+
+	_, found = c.Get("k")
+	assert.False(t, found)
+
+	c.RLock()
+	assert.Equal(t, 0, len(c.store))
+	c.RUnlock()
 }
