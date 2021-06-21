@@ -5,20 +5,17 @@ import (
 	"time"
 )
 
-type (
-	// Cache is an in-memory key:value store where cached items can expire after
-	// the expiration period upon lookup.
-	Cache struct {
-		sync.RWMutex
-		expiration time.Duration
-		store      map[string]cached
-	}
+// Cache is an in-memory key-value store where keys expire after the configured period of time.
+type Cache struct {
+	sync.RWMutex
+	expiration time.Duration
+	store      map[string]cached
+}
 
-	cached struct {
-		expires time.Time
-		value   interface{}
-	}
-)
+type cached struct {
+	expires time.Time
+	value   interface{}
+}
 
 // New returns a new Cache with a given value expiration duration.
 func New(expiration time.Duration) *Cache {
@@ -28,8 +25,7 @@ func New(expiration time.Duration) *Cache {
 	}
 }
 
-// Get an item from the cache. Returns the value or nil, and a bool indicating
-// whether the key was found.
+// Get retrieves a value from cache or nil, and a bool indicating whether the key was found.
 func (c *Cache) Get(k string) (interface{}, bool) {
 	c.RLock()
 	cached, found := c.store[k]
@@ -40,7 +36,7 @@ func (c *Cache) Get(k string) (interface{}, bool) {
 	return cached.value, found
 }
 
-// Set adds an item to the cache or replaces any existing item.
+// Set adds a value to the cache or replaces an existing value.
 func (c *Cache) Set(k string, v interface{}) {
 	t := time.Now().Add(c.expiration)
 	c.Lock()

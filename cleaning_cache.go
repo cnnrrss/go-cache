@@ -6,9 +6,9 @@ import (
 	"time"
 )
 
-// NewSelfCleanup returns a new Cache with a given expiration duration that
-// automatically removes items from it's internal storage once they are expired
-func NewSelfCleanup(expiration time.Duration) *Cache {
+// NewWithSelfCleanup returns a new Cache with a given expiration duration that
+// automatically cleans it's internal storage once they are expired.
+func NewWithSelfCleanup(expiration time.Duration) *Cache {
 	c := New(expiration)
 	before := expvar.NewInt(fmt.Sprintf("size_before_%p", c))
 	after := expvar.NewInt(fmt.Sprintf("size_after_%p", c))

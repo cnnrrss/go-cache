@@ -44,4 +44,3 @@ func TestGet_expired(t *testing.T) {
 		t.Error("expected to not find expired value")
 	}
 }
-

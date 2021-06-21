@@ -1,12 +1,12 @@
 /*
 
-Package go-cache is an in-memory key-value store where keys expire after a period
-of time.
+Package go-cache is an in-memory key-value store where keys expire after the configured period of time.
 
-The Cache interface provides Get and Set methods. The cache is goroutine safe.
+The Cache type provides Get and Set methods. The cache itself is goroutine safe.
 
-Values are stored as type interface{}. You will need to use a type assertion
-after retrieval to use the typed value.
+Values are stored as type interface{}.
+
+You will need to use a type assertion after retrieval to use the typed value.
 
 Example:
 
@@ -18,4 +18,3 @@ Example:
     }
 */
 package cache
-
