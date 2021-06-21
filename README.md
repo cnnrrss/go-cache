@@ -1,4 +1,5 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/cnnrrss/go-cache)](https://goreportcard.com/report/github.com/cnnrrss/go-cache)
+[![Scc Count Badge](https://sloc.xyz/github/cnnrrss/go-cache/)](https://sloc.xyz/github/cnnrrss/go-cache/)
 
 # go-cache
 
